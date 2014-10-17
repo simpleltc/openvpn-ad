@@ -6,6 +6,7 @@ setup(
     description='Code for authenticating OpenVPN against Active Directory',
     author='Mark Adams, Michael Schneider',
     author_email='mark@simpleltc.com, michael@simpleltc.com',
+    license = "MIT",
     packages=find_packages(),
     install_requires=['pyasn1==0.1.7', 'python3-ldap==0.9.5.4']
 )
