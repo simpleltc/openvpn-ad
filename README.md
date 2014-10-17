@@ -55,7 +55,19 @@ auth-user-pass-verify /etc/openvpn/auth_verify.py via-env
 Troubleshooting
 -------------------------------------
 If you experience any issues, try turning on logging by editing `on_connect.py`
-or `auth_verify.py` and changing `enable_logging = True`
+or `auth_verify.py` and changing `enable_logging = True`. Also further logging
+can be enabled from OpenVPN by setting the `log` configuration option. This
+option will allow you to see the output of the scripts as well.
+
+On systems with SELinux, it will be very important to make sure that the scripts
+have the proper SELinux type set for your environment so that the system
+will allow OpenVPN to run them. On Redhat distributions, this is `openvpn_etc_t`.
+
+In addition, some of the dependent Python packages have been known, in certain
+circumstances, to be labeled with the wrong SELinux type and as a result the
+Python interpreter cannot read the files. These files will have an access denied
+error reported in the stack trace that OpenVPN writes to its log. Usually running
+`restorecon -r` against the Python site-packages directory will solve the problem.
 
 ### Response Codes ###
 Both scripts return back a number of response codes. OpenVPN will not permit a
@@ -63,12 +75,12 @@ connection if either script returns a non-zero code. These codes are also
 written to the log file if logging is enabled and can be useful for
 troubleshooting.
 
-| Code  | Description                                            |
-| ---------------------------------------------------------------|
-| 0     | Success                                                |
-| 1     | Unknown Error or Exception                             |
-| 2     | User not found                                         |
-| 3     | User not enabled                                       |
-| 4     | User not a member of the `authorized_group`            |
-| 5     | Invalid Request (Credentials are probably missing)     |
-| 6     | Invalid Credentials (Username & Password do not match) |
+Code  | Description                                            |
+------|--------------------------------------------------------|
+0     | Success                                                |
+1     | Unknown Error or Exception                             |
+2     | User not found                                         |
+3     | User not enabled                                       |
+4     | User not a member of the `authorized_group`            |
+5     | Invalid Request (Credentials are probably missing)     |
+6     | Invalid Credentials (Username & Password do not match) |
