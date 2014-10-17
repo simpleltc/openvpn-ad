@@ -84,3 +84,7 @@ Code  | Description                                            |
 4     | User not a member of the `authorized_group`            |
 5     | Invalid Request (Credentials are probably missing)     |
 6     | Invalid Credentials (Username & Password do not match) |
+
+License
+--------------------------------------------------------
+[MIT](https://bitbucket.org/simpleltc/openvpn-ad/raw/master/LICENSE)
