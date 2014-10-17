@@ -26,6 +26,7 @@ from openvpn_ad.verification import verify_cert_against_ad
 
 if __name__ == '__main__':
     logger = configure_logging('on_connect', enable_logging)
+    cert = None
 
     try:
         # The verified TLS certificate DN is provided via environment variables
@@ -37,5 +38,5 @@ if __name__ == '__main__':
         result = 1
         logger.exception("An unknown exception occurred.")
 
-    logger.info('Challenge: {0}; Response: {1}'.format(cert, result))
+    logger.info('Challenge: {0}; Response: {1}'.format(cert if cert is not None else 'None', result))
     sys.exit(result)

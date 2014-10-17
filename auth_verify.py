@@ -26,6 +26,7 @@ from openvpn_ad.verification import verify_creds_against_ad
 
 if __name__ == '__main__':
     logger = configure_logging('auth_verify',enable_logging)
+    username = None
 
     try:
         # The credentials are provided via environment variables from OpenVPN
@@ -38,7 +39,7 @@ if __name__ == '__main__':
         result = 1
         logger.exception("An unknown exception occurred.")
 
-    logger.info('Challenge: {0}; Response: {1}'.format(cert, result))
+    logger.info('Challenge: {0}; Response: {1}'.format(username if username is not None else 'None', result))
     sys.exit(result)
 
 
