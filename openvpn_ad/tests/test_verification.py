@@ -6,13 +6,13 @@ from openvpn_ad.verification import *
 class VerifyCertTestCase(unittest.TestCase):
     def test_reformat_dn_from_openvpn(self):
         expected = 'CN=John Smith,OU=Users,DC=MyCompany,DC=com'
-        actual = format_dn_from_openvpn('/DC=com/DC=MyCompany/OU=Users/CN=John_Smith')
+        actual = format_dn_from_openvpn('DC=com, DC=MyCompany, OU=Users, CN=John_Smith')
 
         self.assertEquals(expected, actual)
 
     def test_reformat_dn_from_openvpn_should_remove_emailAddress_attribute(self):
         expected = 'CN=John Smith,OU=Users,DC=MyCompany,DC=com'
-        actual = format_dn_from_openvpn('/DC=com/DC=MyCompany/OU=Users/CN=John_Smith/emailAddress=john@mycompany.com')
+        actual = format_dn_from_openvpn('DC=com, DC=MyCompany, OU=Users, CN=John_Smith, emailAddress=john@mycompany.com')
 
         self.assertEquals(expected, actual)
 
@@ -23,7 +23,7 @@ class VerifyCertTestCase(unittest.TestCase):
         config = MagicMock()
         expected = ReturnCode.user_not_found
         actual = verify_cert_against_ad(config,
-                                        '/DC=com/DC=MyCompany/OU=Users/CN=John_Smith/emailAddress=john@mycompany.com',
+                                        'DC=com, DC=MyCompany, OU=Users, CN=John_Smith, emailAddress=john@mycompany.com',
                                         'VPN Group')
 
         self.assertEquals(expected, actual)
@@ -36,7 +36,7 @@ class VerifyCertTestCase(unittest.TestCase):
         config = MagicMock()
         expected = ReturnCode.user_not_enabled
         actual = verify_cert_against_ad(config,
-                                        '/DC=com/DC=MyCompany/OU=Users/CN=John_Smith/emailAddress=john@mycompany.com',
+                                        'DC=com, DC=MyCompany, OU=Users, CN=John_Smith, emailAddress=john@mycompany.com',
                                         'VPN Group')
 
         self.assertEquals(expected, actual)
@@ -50,7 +50,7 @@ class VerifyCertTestCase(unittest.TestCase):
         config = MagicMock()
         expected = ReturnCode.user_not_group_member
         actual = verify_cert_against_ad(config,
-                                        '/DC=com/DC=MyCompany/OU=Users/CN=John_Smith/emailAddress=john@mycompany.com',
+                                        'DC=com, DC=MyCompany, OU=Users, CN=John_Smith, emailAddress=john@mycompany.com',
                                         'VPN Group')
 
         self.assertEquals(expected, actual)
@@ -64,7 +64,7 @@ class VerifyCertTestCase(unittest.TestCase):
         config = MagicMock()
         expected = ReturnCode.success
         actual = verify_cert_against_ad(config,
-                                        '/DC=com/DC=MyCompany/OU=Users/CN=John_Smith/emailAddress=john@mycompany.com',
+                                        'DC=com, DC=MyCompany, OU=Users, CN=John_Smith, emailAddress=john@mycompany.com',
                                         'VPN Group')
 
         self.assertEquals(expected, actual)
@@ -129,4 +129,3 @@ class VerifyUserPassTestCase(unittest.TestCase):
         actual = verify_creds_against_ad(config, 'john.smith', 'johnspassword1', 'VPN Group')
 
         self.assertEquals(expected, actual)
-

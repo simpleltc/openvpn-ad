@@ -13,7 +13,7 @@ class ReturnCode(object):
     invalid_creds = 6
 
 def format_dn_from_openvpn(cert):
-    parts = [part.split('=') for part in reversed(cert.replace('_', ' ').split('/')) if '=' in part]
+    parts = [part.split('=') for part in reversed(cert.replace('_', ' ').split(', ')) if '=' in part]
     parts = filter(lambda x: x[0] != 'emailAddress', parts)
 
     return ','.join(map('='.join, parts))

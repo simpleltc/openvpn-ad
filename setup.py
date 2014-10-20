@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="openvpn-ad",
-    version="0.5",
+    version="0.5.1",
     description='Code for authenticating OpenVPN against Active Directory',
     author='Mark Adams, Michael Schneider',
     author_email='mark@simpleltc.com, michael@simpleltc.com',
