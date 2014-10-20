@@ -16,6 +16,7 @@ to decide whether or not the user's credentials are valid.
 
 System Requirements
 ------------------------
+* OpenVPN 2.3
 * Python 3
 * ldap3 (`pip install python3-ldap`)
 
