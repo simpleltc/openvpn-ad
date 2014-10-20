@@ -14,7 +14,10 @@ ldap_config = Config(
 authorized_group = 'VPN Users'
 
 # Indicate whether or not logging is enabled
-enable_logging = True
+enable_logging = False
+
+def push_options(opts):
+    pass
 
 ### ALL CONFIGURATION DIRECTIVES SHOULD GO ABOVE THIS LINE ###
 
@@ -33,6 +36,9 @@ if __name__ == '__main__':
         cert = os.environ['tls_id_0']
 
         result = verify_cert_against_ad(ldap_config, cert, authorized_group)
+
+        with open(sys.argv[1], 'w') as opt_file:
+            push_options(opt_file)
 
     except:
         result = 1
